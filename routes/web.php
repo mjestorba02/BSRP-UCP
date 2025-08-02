@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MiscController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -38,6 +39,15 @@ Route::prefix('profile')->middleware(['auth'])->group(function () {
 
 //Change Password
 Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+
+//Fetching Ban History
+Route::get('/ban-history/{username}', [ProfileController::class, 'getBanHistory']);
+
+//Misc
+Route::prefix('misc')->middleware(['auth'])->group(function () {
+    Route::get('/phonebook', [MiscController::class, 'phoneBook'])->name('misc.phonebook');
+    Route::get('/turfs', [MiscController::class, 'turfs'])->name('turfs');
+});
 
 // Settings route
 Route::get('/settings', [SettingsController::class, 'index'])->name('settings');

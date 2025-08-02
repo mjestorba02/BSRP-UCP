@@ -9,7 +9,7 @@
                     </svg>
                 </button>
                 <a href="#" class="flex items-center ms-2 md:me-24">
-                    <img src="{{ asset('images/logo.jpg') }}" class="h-8 w-8 me-2 rounded-full" alt="Logo">
+                    <img src="{{ asset('images/bsrplogo.jpg') }}" class="h-8 w-8 me-2 rounded-full" alt="Logo">
                     <span class="self-center text-xl font-extrabold sm:text-2xl whitespace-nowrap text-red-800 font-[Times_New_Roman] uppercase">
                         Bloodline Streets Roleplay
                     </span>
