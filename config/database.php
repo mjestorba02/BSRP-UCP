@@ -44,43 +44,12 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-
-            'host' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_HOST',
-                'testing' => 'TEST_DB_HOST',
-                default => 'DB_HOST',
-            }, '127.0.0.1'),
-
-            'port' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_PORT',
-                'testing' => 'TEST_DB_PORT',
-                default => 'DB_PORT',
-            }, '3306'),
-
-            'database' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_DATABASE',
-                'testing' => 'TEST_DB_DATABASE',
-                default => 'DB_DATABASE',
-            }, 'forge'),
-
-            'username' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_USERNAME',
-                'testing' => 'TEST_DB_USERNAME',
-                default => 'DB_USERNAME',
-            }, 'forge'),
-
-            'password' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_PASSWORD',
-                'testing' => 'TEST_DB_PASSWORD',
-                default => 'DB_PASSWORD',
-            }, ''),
-
-            'unix_socket' => env(match (app()->environment()) {
-                'production' => 'PRD_DB_SOCKET',
-                'testing' => 'TEST_DB_SOCKET',
-                default => 'DB_SOCKET',
-            }, ''),
-
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
