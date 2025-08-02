@@ -6,7 +6,7 @@
     <link rel="icon" href="{{ asset('images/bsrplogo.png') }}" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <title>TESTSSBS:RP | Login</title>
+    <title>TESTSS2BS:RP | Login</title>
 </head>
 <body class="overflow-x-hidden">
 
