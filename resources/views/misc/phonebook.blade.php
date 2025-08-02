@@ -33,7 +33,7 @@
 </div>
 
 <div class="p-6">
-    <h1 class="text-xl text-white font-bold mb-4">Phonebook Directory</h1>
+    <h1 class="text-xl text-white font-bold mb-4">Phonebook Directorys</h1>
 
     @if($entries->isEmpty())
         <p class="text-white">The phonebook directory is currently empty.</p>
