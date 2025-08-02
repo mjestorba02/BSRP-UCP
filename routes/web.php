@@ -33,8 +33,6 @@ Route::prefix('profile')->middleware(['auth'])->group(function () {
     Route::get('/', [ProfileController::class, 'stats'])->name('profile'); // <-- THIS fixes the error
     Route::get('stats', [ProfileController::class, 'stats'])->name('profile.stats');
     Route::get('inventory', [ProfileController::class, 'inventory'])->name('profile.inventory');
-    Route::get('change-password', [ProfileController::class, 'changePasswordForm'])->name('profile.changePassword');
-    Route::post('change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword.submit');
     Route::get('punish-records', [ProfileController::class, 'punishRecords'])->name('profile.punishRecords');
 });
 
