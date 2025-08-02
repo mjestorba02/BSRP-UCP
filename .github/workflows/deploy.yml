@@ -22,7 +22,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no" \
-            ./ root@139.99.61.109:/var/www/bsrp/
+            ./ root@139.99.61.109:/var/www/bsrp/public
 
       - name: SSH into VPS and run deployment commands
         run: |
