@@ -20,7 +20,7 @@ jobs:
 
       - name: Copy project to VPS via rsync
         run: |
-          rsync -avz --delete \
+          rsync -avz --exclude='.env' --exclude='storage/' \
             -e "ssh -o StrictHostKeyChecking=no" \
             ./ root@139.99.61.109:/var/www/bsrp
 
