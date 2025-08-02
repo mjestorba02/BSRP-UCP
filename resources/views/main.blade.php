@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom_nav-container" style="background: #fff;">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                <img src="{{ asset('images/logo.png') }}" class="img-fluid rounded-circle me-2" style="height: 40px;" alt="logo"/>
+                <img src="{{ asset('images/bsrplogo.png') }}" class="img-fluid rounded-circle me-2" style="height: 40px;" alt="logo"/>
                 <span class="brand-text" style="color: var(--scrolled-color);">Bloodline Streets Roleplay</span>
             </a>
 
