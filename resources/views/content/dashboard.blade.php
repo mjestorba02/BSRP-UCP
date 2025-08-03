@@ -23,9 +23,25 @@
 
 <div class="p-6">
     <!-- Full Width Grid: 2 Columns -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:flex gap-6">
         <!-- Left Column: Player Card -->
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6 flex-1">
+            <!-- Announcements -->
+            <div class="bg-black p-6 rounded-xl shadow-md">
+                <h3 class="text-lg font-semibold mb-4 text-white">📢 Announcements</h3>
+                <ul>
+                    @foreach ($announcements as $announcement)
+                        <li class="p-4 mb-4 bg-gray-700 shadow rounded">
+                            <p class="text-white">{{ $announcement->message }}</p>
+                            @if ($announcement->image_url)
+                                <img src="{{ $announcement->image_url }}" alt="Announcement Image" class="mt-2 max-w-xs rounded" />
+                            @endif
+                            <small class="text-gray-400">{{ $announcement->created_at->diffForHumans() }}</small>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
             <!-- Patch & Updates Announcement -->
             <div class="bg-black rounded-xl p-6 shadow-md">
                 <h3 class="text-white text-md font-semibold mb-4">📢 Patch & Updates</h3>
@@ -41,25 +57,9 @@
 
                 <p class="mt-4 text-sm text-gray-400 italic">Last updated: July 31, 2025</p>
             </div>
-
-            <!-- Announcements -->
-            <div class="bg-black p-6 rounded-xl shadow-md">
-                <h3 class="text-lg font-semibold mb-4 text-white">Announcements</h3>
-                <ul>
-                    @foreach ($announcements as $announcement)
-                        <li class="p-4 mb-4 bg-white shadow rounded">
-                            <p>{{ $announcement->message }}</p>
-                            @if ($announcement->image_url)
-                                <img src="{{ $announcement->image_url }}" alt="Announcement Image" class="mt-2 max-w-xs rounded" />
-                            @endif
-                            <small class="text-gray-500">{{ $announcement->created_at->diffForHumans() }}</small>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
         </div>
         <!-- Right Column: Player Information -->
-        <div class="bg-black rounded-xl p-6 shadow-md text-gray-300 h-full">
+        <div class="bg-black rounded-xl p-6 shadow-md text-gray-300 h-full flex-1 flex flex-col">
             <!-- Avatar, Name, Badges -->
             <div class="flex items-center gap-4">
                 <img src="{{ asset('images/faces/' . $user->skin . '.png') }}" alt="Avatar" class="w-25 h-25 rounded-[10%]">

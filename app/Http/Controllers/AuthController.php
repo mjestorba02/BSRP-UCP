@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
+use App\Models\Announcement;
 
 class AuthController extends Controller
 {
@@ -34,7 +35,8 @@ class AuthController extends Controller
 
         $gangs = DB::table('gangs')->get();
         $gangranks = DB::table('gangranks')->get();
-        $announcement = Cache::get('latest_announcement', 'No announcement yet.');
+
+        $announcements = Announcement::latest()->get();
 
         return view('dashboard', [
             'mainContent' => 'content.dashboard',
@@ -43,7 +45,7 @@ class AuthController extends Controller
             'user' => $user,
             'wealth' => $wealth,
             'cardTotal' => $cardTotal,
-            'announcement' => $announcement,
+            'announcements' => $announcements,
         ]);
     }
 
