@@ -46,7 +46,7 @@
             @enderror
             <p class="text-sm text-gray-400 mt-4 mb-10 text-center">
                 Forgot password? Submit a recovery request
-                <a href="https://discord.gg/ZkyZFQe3MY" target="_blank" class="text-red-400 hover:underline">here</a>.
+                <a href="https://discord.gg/bloodlinestreetsrp" target="_blank" class="text-red-400 hover:underline">here</a>.
             </p>
         </div>
 

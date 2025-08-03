@@ -45,20 +45,7 @@
             <!-- Announcements -->
             <div class="bg-black p-6 rounded-xl shadow-md">
                 <h3 class="text-lg font-semibold mb-4 text-white">Announcements</h3>
-                <ul class="space-y-4 text-gray-300">
-                    <li class="flex items-center justify-between border-b border-gray-700 pb-2">
-                        <span>🎃 Halloween Events</span>
-                        <span class="text-sm text-white">2019-10-29</span>
-                    </li>
-                    <li class="flex items-center justify-between border-b border-gray-700 pb-2">
-                        <span>🛠️ v2.1 Update</span>
-                        <span class="text-sm text-white">2019-09-26</span>
-                    </li>
-                    <li class="flex items-center justify-between">
-                        <span>⭐ Staff Promotions & Advisory</span>
-                        <span class="text-sm text-white">2019-05-17</span>
-                    </li>
-                </ul>
+                <p id="announcement-text">{{ $announcement }}</p>
             </div>
         </div>
         <!-- Right Column: Player Information -->
@@ -161,3 +148,13 @@
         </div>
     </div>
 </main>
+
+<script>
+    setInterval(() => {
+        fetch('/api/get-latest-announcement')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('announcement-text').innerText = data.announcement;
+            });
+    }, 30000);
+</script>

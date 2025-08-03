@@ -33,6 +33,7 @@ class AuthController extends Controller
 
         $gangs = DB::table('gangs')->get();
         $gangranks = DB::table('gangranks')->get();
+        $announcement = Cache::get('latest_announcement', 'No announcement yet.');
 
         return view('dashboard', [
             'mainContent' => 'content.dashboard',
@@ -41,6 +42,7 @@ class AuthController extends Controller
             'user' => $user,
             'wealth' => $wealth,
             'cardTotal' => $cardTotal,
+            'announcement' => $announcement,
         ]);
     }
 

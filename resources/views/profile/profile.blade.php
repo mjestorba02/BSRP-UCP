@@ -25,7 +25,7 @@
     <div class="w-full md:w-1/4 relative">
         <img src="{{ asset('images/skinsv2/' . $user->skin . '.jpg') }}" 
             alt="Player Image" 
-            class="w-full h-64 md:h-full object-cover shadow-lg">
+            class="w-full h-64 md:h-full object-cover object-top shadow-lg">
 
         {{-- Blurred overlay with name and ranks --}}
         <div class="absolute bottom-0 left-0 w-full flex items-center h-16 backdrop-blur-sm bg-white/10 text-white px-4 z-10">
