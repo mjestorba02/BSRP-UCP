@@ -17,7 +17,7 @@ Route::post('/discord-announcement', function (Request $request) {
 
 Route::get('/get-latest-announcement', function () {
     return response()->json([
-        'announcement' => Cache::get('latest_announcement', 'No announcement yet.'),
+        'message' => Cache::get('latest_announcement', 'No announcement yet.'),
         'image_url' => Cache::get('latest_announcement_image')
     ]);
 });
