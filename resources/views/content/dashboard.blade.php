@@ -45,7 +45,17 @@
             <!-- Announcements -->
             <div class="bg-black p-6 rounded-xl shadow-md">
                 <h3 class="text-lg font-semibold mb-4 text-white">Announcements</h3>
-                <p id="announcement-text">{{ $announcement }}</p>
+                <ul>
+                    @foreach ($announcements as $announcement)
+                        <li class="p-4 mb-4 bg-white shadow rounded">
+                            <p>{{ $announcement->message }}</p>
+                            @if ($announcement->image_url)
+                                <img src="{{ $announcement->image_url }}" alt="Announcement Image" class="mt-2 max-w-xs rounded" />
+                            @endif
+                            <small class="text-gray-500">{{ $announcement->created_at->diffForHumans() }}</small>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
         <!-- Right Column: Player Information -->

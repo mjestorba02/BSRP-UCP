@@ -61,17 +61,3 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/success', function () {
     return view('auth.success');
 })->name('auth.success');
-
-//API
-Route::post('/discord-announcement', function (Request $request) {
-    $announcement = $request->input('announcement');
-    Cache::put('latest_announcement', $announcement);
-
-    return response()->json(['message' => 'Announcement received']);
-});
-
-Route::get('/get-latest-announcement', function () {
-    return response()->json([
-        'announcement' => Cache::get('latest_announcement', 'No announcement yet.')
-    ]);
-});
