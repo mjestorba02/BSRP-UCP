@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MiscController;
+use App\Http\Controllers\SettingsController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -59,3 +61,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/success', function () {
     return view('auth.success');
 })->name('auth.success');
+
+//API
+Route::post('/discord-announcement', function (Request $request) {
+    $announcement = $request->input('announcement');
+    Cache::put('latest_announcement', $announcement);
+
+    return response()->json(['message' => 'Announcement received']);
+});
+
+Route::get('/get-latest-announcement', function () {
+    return response()->json([
+        'announcement' => Cache::get('latest_announcement', 'No announcement yet.')
+    ]);
+});
