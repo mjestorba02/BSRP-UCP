@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Models\Announcement;
+use App\Models\Updates;
 
 class AuthController extends Controller
 {
@@ -37,6 +38,7 @@ class AuthController extends Controller
         $gangranks = DB::table('gangranks')->get();
 
         $announcements = Announcement::latest()->get();
+        $updates = Updates::latest()->get();
 
         return view('dashboard', [
             'mainContent' => 'content.dashboard',
@@ -46,6 +48,7 @@ class AuthController extends Controller
             'wealth' => $wealth,
             'cardTotal' => $cardTotal,
             'announcements' => $announcements,
+            'updates' => $updates,
         ]);
     }
 
