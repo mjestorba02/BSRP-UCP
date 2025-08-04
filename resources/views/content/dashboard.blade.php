@@ -42,7 +42,7 @@
                 </ul>
             </div>
             <!-- Avatar, Name, Badges -->
-            <div class="flex items-center gap-4">
+            <div class="bg-black flex items-center gap-4">
                 <img src="{{ asset('images/faces/' . $user->skin . '.png') }}" alt="Avatar" class="w-25 h-25 rounded-[10%]">
                 <div>
                     <h3 class="text-xl font-bold text-white">{{ str_replace('_', ' ', $user->username ?? 'Noob Dude') }}</h3>
@@ -147,7 +147,7 @@
                         <li class="p-4 mb-4 bg-gray-400 shadow rounded">
                             <p class="text-white">{{ $update->updates }}</p>
                             @if ($update->image_url)
-                                <img src="{{ $announcement->image_url }}" alt="Announcement Image" class="mt-2 max-w-xs rounded" />
+                                <img src="{{ $update->image_url }}" alt="Updates Image" class="mt-2 max-w-xs rounded" />
                             @endif
                             <small class="text-gray-700">{{ $update->created_at->diffForHumans() }}</small>
                         </li>
