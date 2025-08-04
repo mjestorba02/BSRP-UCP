@@ -145,7 +145,7 @@
                 <ul>
                     @foreach ($updates as $update)
                         <li class="p-4 mb-4 bg-gray-400 shadow rounded">
-                            <p class="text-white">{{ $update->message }}</p>
+                            <p class="text-white">{{ $update->updates }}</p>
                             @if ($update->image_url)
                                 <img src="{{ $announcement->image_url }}" alt="Announcement Image" class="mt-2 max-w-xs rounded" />
                             @endif
