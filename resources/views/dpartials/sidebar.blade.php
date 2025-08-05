@@ -1,5 +1,5 @@
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-55 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0 bg-black shadow shadow-xl" aria-label="Sidebar">
-    <div class="w-full h-full px-4 pb-4 overflow-y-auto bg-black shadow">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-55 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0 bg-gradient-to-r from-black to-[#410000] shadow shadow-xl" aria-label="Sidebar">
+    <div class="w-full h-full px-4 pb-4 overflow-y-auto bg-gradient-to-r from-black to-[#410000] shadow">
         <!-- Title -->
         <div class="flex justify-center items-center mb-6">
             <h1 class="text-[21px] font-extrabold text-white font-[Times_New_Roman] uppercase">Control Panel</h1>
@@ -11,7 +11,7 @@
             <!-- Dashboard -->
             <li>
                 <a href="{{ route('dashboard') }}"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-gray-700
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]
                 {{ request()->routeIs('dashboard') ? 'text-white' : '' }}">
                     <img src="{{ asset('svg/dashboard.svg') }}"
                         alt="Dashboard Icon"
@@ -30,7 +30,7 @@
             <!-- Profile -->
             <li>
                 <a href="{{ route('profile') }}"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-gray-700
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]
                 {{ request()->routeIs('profile') ? 'text-white' : '' }}">
                     <img src="{{ asset('svg/profile.svg') }}"
                         alt="Profile Icon"
@@ -47,7 +47,7 @@
             <!-- Misc -->
             <li x-data="{ open: false }">
                 <button @click="open = !open"
-                    class="group flex items-center p-1 w-full rounded-lg transition hover:bg-gray-700 focus:outline-none">
+                    class="group flex items-center p-1 w-full rounded-lg transition hover:bg-[#410000] focus:outline-none">
                     <img src="{{ asset('svg/misc.svg') }}"
                         alt="Misc Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
@@ -61,14 +61,20 @@
 
                 <ul x-show="open" x-transition class="ml-6 mt-1 space-y-1">
                     <li>
+                        <a href="{{ route('toys') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            Clothing Items
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('misc.phonebook') }}"
-                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-gray-700 transition">
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
                             Phone Book
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('turfs') }}"
-                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-gray-700 transition">
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
                             Turfs & Traphouse Info
                         </a>
                     </li>
@@ -80,7 +86,7 @@
 
             <li>
                 <a href="#"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-gray-700">
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
                     <img src="{{ asset('svg/info.svg') }}"
                         alt="Gang Info Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
@@ -91,8 +97,8 @@
             </li>
 
             <li>
-                <a href="#"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-gray-700">
+                <a href="{{ route('gang.manage') }}"
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
                     <img src="{{ asset('svg/settings.svg') }}"
                         alt="Gang Management Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
@@ -107,7 +113,7 @@
 
             <li>
                 <a href="#"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-gray-700">
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
                     <img src="{{ asset('svg/wrench.svg') }}"
                         alt="Commands Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">

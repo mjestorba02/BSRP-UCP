@@ -9,6 +9,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MiscController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\GangController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -49,7 +50,12 @@ Route::get('/ban-history/{username}', [ProfileController::class, 'getBanHistory'
 Route::prefix('misc')->middleware(['auth'])->group(function () {
     Route::get('/phonebook', [MiscController::class, 'phoneBook'])->name('misc.phonebook');
     Route::get('/turfs', [MiscController::class, 'turfs'])->name('turfs');
+    Route::get('/toys', [MiscController::class, 'toys'])->name('toys');
 });
+
+//Delete for Announcements & Updates
+Route::delete('/announcements/{id}', [AuthController::class, 'destroy_announcement'])->name('announcements.destroy');
+Route::delete('/updates/{id}', [AuthController::class, 'destroy_updates'])->name('updates.destroy');
 
 // Settings route
 Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
@@ -61,3 +67,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/success', function () {
     return view('auth.success');
 })->name('auth.success');
+
+//Gang Management
+Route::middleware('auth')->group(function () {
+    Route::get('/gang/manage', [GangController::class, 'index'])->name('gang.manage');
+    Route::post('/gang/invite', [GangController::class, 'invite'])->name('gang.invite');
+    Route::delete('/gang/kick/{id}', [GangController::class, 'kick'])->name('gang.kick');
+    Route::post('/gang/update-rank/{uid}', [GangController::class, 'updateRank'])->name('gang.updateRank');
+});

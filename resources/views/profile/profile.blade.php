@@ -19,7 +19,7 @@
     </ol>
 </div>
 
-<div class="flex flex-col md:flex-row w-full bg-black text-white rounded-lg shadow-lg overflow-hidden">
+<div class="flex flex-col md:flex-row w-full bg-gradient-to-b from-black to-[#410000] text-white rounded-lg shadow-lg overflow-hidden">
 
     {{-- Left: Profile Image --}}
     <div class="w-full md:w-1/4 relative">
@@ -92,42 +92,42 @@
             <div class="flex flex-wrap mb-4 border border-gray-100/30 rounded overflow-hidden divide-x divide-white">
                 <button
                     @click="setTab('stats')"
-                    :class="tab === 'stats' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'stats' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Stats
                 </button>
                 <button
                     @click="setTab('inventory')"
-                    :class="tab === 'inventory' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'inventory' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Inventory
                 </button>
                 <button
                     @click="setTab('properties')"
-                    :class="tab === 'properties' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'properties' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Properties
                 </button>
                 <button
                     @click="setTab('vehicles')"
-                    :class="tab === 'vehicles' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'vehicles' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Vehicles
                 </button>
                 <button
                     @click="setTab('punish')"
-                    :class="tab === 'punish' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'punish' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Punish Records
                 </button>
                 <button
                     @click="setTab('password')"
-                    :class="tab === 'password' ? 'bg-black' : 'bg-neutral-900'"
+                    :class="tab === 'password' ? 'bg-red-500/10' : 'bg-red-500/30'"
                     class="flex-1 px-4 py-2 font-semibold text-white hover:bg-black"
                 >
                     Change Password

@@ -33,43 +33,46 @@
 </div>
 
 <div class="p-6">
-    <h1 class="text-xl text-white font-bold mb-4">Phonebook Directorys</h1>
-
-    @if($entries->isEmpty())
-        <p class="text-white">The phonebook directory is currently empty.</p>
-    @else
-        <div class="overflow-x-auto rounded-lg border border-gray-700">
-            <table class="min-w-full text-sm text-white bg-gray-800 border-collapse">
-                <thead>
-                    <tr class="bg-gray-700 text-left">
-                        <th class="p-3 border border-gray-600">#</th>
-                        <th class="p-3 border border-gray-600">Name</th>
-                        <th class="p-3 border border-gray-600">Number</th>
+    <h1 class="text-xl text-white font-bold mb-4">List of Contacts</h1>
+    <div class="overflow-x-auto rounded-lg border border-[#410000]">
+         <table class="min-w-full text-sm text-white bg-black border-collapse">
+            <thead>
+                <tr class="bg-[#410000] text-left">
+                    <th class="p-3 border border-red-500">#</th>
+                    <th class="p-3 border border-red-500">Name</th>
+                    <th class="p-3 border border-red-500">Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if($entries->isEmpty())
+                    <tr>
+                        <td colspan="3" class="p-3 text-center text-white">The phonebook directory is currently empty.</td>
                     </tr>
-                </thead>
-                <tbody>
+                @else
                     @foreach ($entries as $index => $entry)
-                        <tr class="hover:bg-gray-600">
-                            <td class="p-3 border border-gray-700">
+                        <tr class="hover:bg-red-500">
+                            <td class="p-3 border border-[#410000]">
                                 {{ ($currentPage - 1) * $perPage + $index + 1 }}
                             </td>
-                            <td class="p-3 border border-gray-700">{{ $entry->name }}</td>
-                            <td class="p-3 border border-gray-700">{{ $entry->number }}</td>
+                            <td class="p-3 border border-[#410000]">{{ $entry->Contact }}</td>
+                            <td class="p-3 border border-[#410000]">{{ $entry->Number }}</td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
+                @endif
+            </tbody>
+        </table>
+    </div>
 
+    @if(!$entries->isEmpty())
         <div class="mt-4 flex justify-between">
             @if($currentPage > 1)
                 <a href="{{ route('misc.phonebook', ['page' => $currentPage - 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">« Go Back</a>
+                class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">« Go Back</a>
             @endif
 
             @if($total > $currentPage * $perPage)
                 <a href="{{ route('misc.phonebook', ['page' => $currentPage + 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 ml-auto">Next »</a>
+                class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 ml-auto">Next »</a>
             @endif
         </div>
     @endif

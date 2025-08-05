@@ -1,4 +1,4 @@
-<nav class="fixed bg-black top-0 z-50 w-full shadow">
+<nav class="fixed bg-gradient-to-r from-black to-[#410000] top-0 z-50 w-full shadow">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -10,7 +10,7 @@
                 </button>
                 <a href="#" class="flex items-center ms-2 md:me-24">
                     <img src="{{ asset('images/bsrplogo.jpg') }}" class="h-8 w-8 me-2 rounded-full" alt="Logo">
-                    <span class="self-center text-xl font-extrabold sm:text-2xl whitespace-nowrap text-red-800 font-[Times_New_Roman] uppercase">
+                    <span class="self-center text-xl font-extrabold sm:text-2xl whitespace-nowrap text-red-900 font-[Times_New_Roman] uppercase">
                         Bloodline Streets Roleplay
                     </span>
                 </a>

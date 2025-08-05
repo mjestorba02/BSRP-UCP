@@ -117,7 +117,10 @@
     </svg>
     <div>
         <h4 class="text-sm text-gray-400">Faction</h4>
-        <p class="text-lg text-white font-semibold">{{ $user->faction ?? 'None' }}</p>
+        @php
+            $factionName = $factions->firstWhere('id', $user->faction)?->name ?? 'None';
+        @endphp
+        <p class="text-lg text-white font-semibold">{{ $factionName }}</p>
     </div>
 </div>
 
@@ -128,7 +131,11 @@
     </svg>
     <div>
         <h4 class="text-sm text-gray-400">Faction Rank</h4>
-        <p class="text-lg text-white font-semibold">{{ $user->faction_rank ?? 'N/A' }}</p>
+        @php
+            $factionRank = $factionranks
+                ->first(fn($r) => $r->id == $user->faction && $r->rank == $user->factionrank)?->name ?? 'None';
+        @endphp
+        <p class="text-lg text-white font-semibold">{{ $factionRank }}</p>
     </div>
 </div>
 
@@ -140,7 +147,10 @@
     </svg>
     <div>
         <h4 class="text-sm text-gray-400">Gang</h4>
-        <p class="text-lg text-white font-semibold">{{ $user->gang ?? 'None' }}</p>
+        @php
+            $gangName = $gangs->firstWhere('id', $user->gang)?->name ?? 'None';
+        @endphp
+        <p class="text-lg text-white font-semibold">{{ $gangName }}</p>
     </div>
 </div>
 
@@ -151,7 +161,11 @@
     </svg>
     <div>
         <h4 class="text-sm text-gray-400">Gang Rank</h4>
-        <p class="text-lg text-white font-semibold">{{ $user->gang_rank ?? 'N/A' }}</p>
+        @php
+            $gangRank = $gangranks
+                ->first(fn($r) => $r->id == $user->gang && $r->rank == $user->gangrank)?->name ?? 'None';
+        @endphp
+        <p class="text-lg text-white font-semibold">{{ $gangRank }}</p>
     </div>
 </div>
 

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Models\Announcement;
 use App\Models\Updates;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 
 class AuthController extends Controller
 {
@@ -39,6 +42,29 @@ class AuthController extends Controller
 
         $announcements = Announcement::latest()->get();
         $updates = Updates::latest()->get();
+
+        // Setup Markdown environment and parser
+        $environment = new Environment([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+            'commonmark' => [
+                'enable_em' => false,
+                'enable_strong' => true,
+                'hard_breaks' => false,
+            ],
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+
+        $converter = new CommonMarkConverter([], $environment);
+
+        // Parse each announcement and update field using Markdown
+        foreach ($announcements as $announcement) {
+            $announcement->message = $converter->convertToHtml($announcement->message);
+        }
+
+        foreach ($updates as $update) {
+            $update->updates = $converter->convertToHtml($update->updates);
+        }
 
         return view('dashboard', [
             'mainContent' => 'content.dashboard',
@@ -92,5 +118,21 @@ class AuthController extends Controller
         $request->session()->regenerateToken(); // Prevent CSRF reuse
 
         return redirect('/login');
+    }
+
+    public function destroy_announcement($id)
+    {
+        $announcement = Announcement::findOrFail($id);
+        $announcement->delete();
+
+        return back()->with('success', 'Announcement deleted successfully.');
+    }
+
+    public function destroy_updates($id)
+    {
+        $update = Updates::findOrFail($id);
+        $update->delete();
+
+        return back()->with('success', 'Updates deleted successfully.');
     }
 }

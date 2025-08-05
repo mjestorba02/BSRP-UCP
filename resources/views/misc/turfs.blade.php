@@ -33,31 +33,36 @@
 </div>
 
 <div class="p-6">
-    <h1 class="text-xl text-white font-bold mb-4">Available Turfs</h1>
+    <h1 class="text-xl text-white font-bold mb-4">Turf Info</h1>
 
-    @if($entries->isEmpty())
+    @if($turfs->isEmpty())
         <p class="text-white">The turf directory is currently empty.</p>
     @else
-        <div class="overflow-x-auto rounded-lg border border-gray-700">
+        <div class="overflow-x-auto rounded-lg border border-[#410000]">
             <table class="min-w-full text-sm text-white bg-black border-collapse">
                 <thead>
-                    <tr class="bg-gray-700 text-left">
-                        <th class="p-3 border border-gray-600">#</th>
-                        <th class="p-3 border border-gray-600">Turf Name</th>
-                        <th class="p-3 border border-gray-600">Owner</th>
-                        <th class="p-3 border border-gray-600">Captured By</th>
-                        <th class="p-3 border border-gray-600">Type</th>
-                        <th class="p-3 border border-gray-600">Time</th>
+                    <tr class="bg-[#410000] text-left">
+                        <th class="p-3 border border-red-500">#</th>
+                        <th class="p-3 border border-red-500">Turf Name</th>
+                        <th class="p-3 border border-red-500">Location</th>
+                        <th class="p-3 border border-red-500">Owner</th>
+                        <th class="p-3 border border-red-500">Captured By</th>
+                        <th class="p-3 border border-red-500">Type</th>
+                        <th class="p-3 border border-red-500">Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($entries as $index => $turf)
-                        <tr class="hover:bg-gray-500">
-                            <td class="p-3 border border-gray-700">
+                    @foreach ($turfs as $index => $turf)
+                        @php
+                            $zoneName = app('App\Http\Controllers\ProfileController')->getZoneName($turf->pos_x, $turf->pos_y, $turf->pos_z);
+                        @endphp
+                        <tr class="hover:bg-red-900">
+                            <td class="p-3 border border-red-500">
                                 {{ ($currentPage - 1) * $perPage + $index + 1 }}
                             </td>
-                            <td class="p-3 border border-gray-700">{{ $turf->name }}</td>
-                            <td class="p-3 border border-gray-700">
+                            <td class="p-3 border border-red-500">{{ $turf->name }}</td>
+                            <td class="p-3 border border-red-500">{{ $zoneName }}</td>
+                            <td class="p-3 border border-red-500">
                                 @php
                                     $color = $turf->color & 0xFFFFFFFF;
                                     $rgb = ($color >> 8) & 0xFFFFFF;
@@ -74,9 +79,9 @@
                                     {{ $turf->gang_name ?? 'Civilian' }}
                                 </span>
                             </td>
-                            <td class="p-3 border border-gray-700">{{ $turf->capturedby }}</td>
-                            <td class="p-3 border border-gray-700">{{ $turf->type_label }}</td>
-                            <td class="p-3 border border-gray-700">{{ $turf->time }} hour/s</td>
+                            <td class="p-3 border border-red-500">{{ $turf->capturedby }}</td>
+                            <td class="p-3 border border-red-500">{{ $turf->type_label }}</td>
+                            <td class="p-3 border border-red-500">{{ $turf->time }} hour/s</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -86,49 +91,45 @@
         <div class="mt-4 flex justify-between">
             @if($currentPage > 1)
                 <a href="{{ route('misc.turfs', ['page' => $currentPage - 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">« Go Back</a>
+                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-red-500">« Go Back</a>
             @endif
 
             @if($total > $currentPage * $perPage)
                 <a href="{{ route('misc.turfs', ['page' => $currentPage + 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 ml-auto">Next »</a>
+                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-red-500 ml-auto">Next »</a>
             @endif
         </div>
     @endif
 </div>
 
-{{ -- Traphouses -- }}
 <div class="p-6">
-    <h1 class="text-xl text-white font-bold mb-4">Available Traphouse</h1>
+    <h1 class="text-xl text-white font-bold mb-4">Traphouse Info</h1>
 
     @if($thouse->isEmpty())
         <p class="text-white">The turf directory is currently empty.</p>
     @else
-        <div class="overflow-x-auto rounded-lg border border-gray-700">
+        <div class="overflow-x-auto rounded-lg border border-[#410000]">
             <table class="min-w-full text-sm text-white bg-black border-collapse">
                 <thead>
-                    <tr class="bg-gray-700 text-left">
-                        <th class="p-3 border border-gray-600">#</th>
-                        <th class="p-3 border border-gray-600">Traphouse Name</th>
-                        <th class="p-3 border border-gray-600">Location</th>
-                        <th class="p-3 border border-gray-600">Time</th>
+                    <tr class="bg-[#410000] text-left">
+                        <th class="p-3 border border-red-500">#</th>
+                        <th class="p-3 border border-red-500">Traphouse Name</th>
+                        <th class="p-3 border border-red-500">Location</th>
+                        <th class="p-3 border border-red-500">Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($thouse as $index => $th)
-                        <tr class="hover:bg-gray-500">
-                            <td class="p-3 border border-gray-700">
-                                {{ ($currentPage - 1) * $perPage + $index + 1 }}
+                    @foreach ($thouse as $thindex => $th)
+                        @php
+                            $zoneName = app('App\Http\Controllers\ProfileController')->getZoneName($turf->pos_x, $turf->pos_y, $turf->pos_z);
+                        @endphp
+                        <tr class="hover:bg-red-900">
+                            <td class="p-3 border border-[#410000]">
+                                {{ ($thcurrentPage - 1) * $thperPage + $thindex + 1 }}
                             </td>
-                            <td class="p-3 border border-gray-700">{{ $th->name }}</td>
-                            <td class="p-3 border border-gray-700">
-                                <span class="{{ $textColorClass }} text-xs px-2 py-0.5 rounded" style="background-color: {{ $hexColor }}">
-                                    {{ $turf->gang_name ?? 'Civilian' }}
-                                </span>
-                            </td>
-                            <td class="p-3 border border-gray-700">{{ $turf->capturedby }}</td>
-                            <td class="p-3 border border-gray-700">{{ $turf->type_label }}</td>
-                            <td class="p-3 border border-gray-700">{{ $turf->time }} hour/s</td>
+                            <td class="p-3 border border-red-500">{{ $th->name }}</td>
+                            <td class="p-3 border border-red-500">{{ $zoneName }}</td>
+                            <td class="p-3 border border-red-500">{{ $th->time }} hour/s</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -136,14 +137,14 @@
         </div>
 
         <div class="mt-4 flex justify-between">
-            @if($currentPage > 1)
-                <a href="{{ route('misc.turfs', ['page' => $currentPage - 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">« Go Back</a>
+            @if($thcurrentPage > 1)
+                <a href="{{ route('misc.turfs', ['thpage' => $thcurrentPage - 1]) }}"
+                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-red-500">« Go Back</a>
             @endif
 
-            @if($total > $currentPage * $perPage)
-                <a href="{{ route('misc.turfs', ['page' => $currentPage + 1]) }}"
-                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 ml-auto">Next »</a>
+            @if($thtotal > $thcurrentPage * $thperPage)
+                <a href="{{ route('misc.turfs', ['thpage' => $thcurrentPage + 1]) }}"
+                   class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-red-500 ml-auto">Next »</a>
             @endif
         </div>
     @endif
