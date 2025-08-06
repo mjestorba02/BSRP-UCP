@@ -10,6 +10,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MiscController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\GangController;
+use App\Http\Controllers\GangStatsController;
+use App\Http\Controllers\FactionController;
+use App\Http\Controllers\FactionStatsController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -70,8 +73,43 @@ Route::get('/success', function () {
 
 //Gang Management
 Route::middleware('auth')->group(function () {
+    //Gang Members
     Route::get('/gang/manage', [GangController::class, 'index'])->name('gang.manage');
     Route::post('/gang/invite', [GangController::class, 'invite'])->name('gang.invite');
     Route::delete('/gang/kick/{id}', [GangController::class, 'kick'])->name('gang.kick');
     Route::post('/gang/update-rank/{uid}', [GangController::class, 'updateRank'])->name('gang.updateRank');
+    Route::post('/gang/give-locker/{uid}', [GangController::class, 'giveLocker'])->name('gang.giveLocker');
+    Route::post('/gang/revoke-locker/{uid}', [GangController::class, 'revokeLocker'])->name('gang.revokeLocker');
+
+    //Gang Stats
+    Route::get('/gang/stats', [GangStatsController::class, 'index'])->name('gang.stats');
+
+    //Gang Inventory
+    Route::get('/gang/inventory', [GangStatsController::class, 'inventory'])->name('gang.inventory');
+
+    //Gang Logs
+    Route::get('/gang/logs', [GangStatsController::class, 'logs'])->name('gang.logs');
+});
+
+//Faction Management
+Route::middleware('auth')->group(function () {
+    //Faction Members
+    Route::get('/faction/manage', [FactionController::class, 'index'])->name('faction.manage');
+    Route::post('/faction/invite', [FactionController::class, 'invite'])->name('faction.invite');
+    Route::delete('/faction/kick/{id}', [FactionController::class, 'kick'])->name('faction.kick');
+    Route::post('/faction/update-rank/{uid}', [FactionController::class, 'updateRank'])->name('faction.updateRank');
+    Route::post('/faction/give-locker/{uid}', [FactionController::class, 'giveLocker'])->name('faction.giveLocker');
+    Route::post('/faction/revoke-locker/{uid}', [FactionController::class, 'revokeLocker'])->name('faction.revokeLocker');
+
+    //Faction Stats
+    Route::get('/faction/stats', [FactionStatsController::class, 'index'])->name('faction.stats');
+
+    //Faction Inventory
+    Route::get('/faction/inventory', [FactionStatsController::class, 'inventory'])->name('faction.inventory');
+
+    //Faction Logs
+    Route::get('/faction/logs', [FactionStatsController::class, 'logs'])->name('faction.logs');
+
+    //Faction Locker Logs
+    Route::get('/faction/lockerlogs', [FactionStatsController::class, 'lockerlogs'])->name('faction.lockerlogs');
 });
