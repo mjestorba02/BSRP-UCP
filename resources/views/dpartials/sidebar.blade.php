@@ -61,21 +61,27 @@
 
                 <ul x-show="open" x-transition class="ml-6 mt-1 space-y-1">
                     <li>
+                        <a href="{{ route('roster') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Admin Roster
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('toys') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Clothing Items
+                            • Clothing Items
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('misc.phonebook') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Phone Book
+                            • Phone Book
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('turfs') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Turfs & Traphouse Info
+                            • Turfs & Traphouse Info
                         </a>
                     </li>
                 </ul>
@@ -103,25 +109,25 @@
                     <li>
                         <a href="{{ route('gang.manage') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Members
+                            • Members
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('gang.stats') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Stats
+                            • Stats
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('gang.inventory') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Inventory
+                            • Inventory
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('gang.logs') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Logs
+                            • Logs
                         </a>
                     </li>
                 </ul>
@@ -150,19 +156,19 @@
                     <li>
                         <a href="{{ route('faction.manage') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Members
+                            • Members
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('faction.logs') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Logs
+                            • Logs
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('faction.lockerlogs') }}"
                             class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
-                            Locker Logs
+                            • Locker Logs
                         </a>
                     </li>
                 </ul>
@@ -170,13 +176,14 @@
             @endif
 
             <!-- Admins -->
+            @if($user->adminlevel > 0)
             <div class="mt-8 text-xs font-semibold uppercase text-gray-500 tracking-wider">Admins:</div>
 
             <li>
-                <a href="#"
+                <a href="{{ route('admin.roster') }}"
                 class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
-                    <img src="{{ asset('svg/profile.svg') }}"
-                        alt="Profile Icon"
+                    <img src="{{ asset('svg/roster.svg') }}"
+                        alt="Roster Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
                     <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
                         Roster
@@ -184,42 +191,69 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{ route('admin.logs') }}"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
+            <!-- Logs -->
+            <li x-data="{ open: false }">
+                <button @click="open = !open"
+                    class="group flex items-center p-1 w-full rounded-lg transition hover:bg-[#410000] focus:outline-none">
                     <img src="{{ asset('svg/logs.svg') }}"
-                        alt="Profile Icon"
+                        alt="Logs Icon"
                         class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
                     <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
                         Logs
                     </span>
-                </a>
-            </li>
+                    <svg :class="{ 'rotate-180': open }" class="ml-auto w-4 h-4 transition-transform text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
 
-            <li>
-                <a href="{{ route('admin.banlogs') }}"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
-                    <img src="{{ asset('svg/banlogs.svg') }}"
-                        alt="Profile Icon"
-                        class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
-                    <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
-                        Ban Logs
-                    </span>
-                </a>
+                <ul x-show="open" x-transition class="ml-6 mt-1 space-y-1">
+                    @if($user->adminlevel == 7)
+                    <li>
+                        <a href="{{ route('admin.cmdlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Admin Command
+                        </a>
+                    </li>
+                    @endif
+                    <li>
+                        <a href="{{ route('admin.logs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Admin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.cmdlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Commands
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.banlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Ban
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.lootlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Loot
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.quitlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Quit
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.killlogs') }}"
+                            class="flex items-center px-2 py-1 rounded-md text-sm text-gray-300 hover:text-white hover:bg-[#410000] transition">
+                            • Kill
+                        </a>
+                    </li>
+                </ul>
             </li>
-
-            <li>
-                <a href="#"
-                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
-                    <img src="{{ asset('svg/wrench.svg') }}"
-                        alt="Commands Icon"
-                        class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
-                    <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
-                        Commands
-                    </span>
-                </a>
-            </li>
-
+            @endif
         </ul>
     </div>
 </aside>

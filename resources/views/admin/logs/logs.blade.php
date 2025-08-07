@@ -10,22 +10,33 @@
             </a>
         </li>
 
-        <!-- Admin Logs -->
+        <!-- Admin -->
         <li>
             <div class="flex items-center">
                 <svg class="w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="#" class="ml-1 text-sm font-medium text-white hover:text-gray-300 md:ml-2">Admin Ban Logs</a>
+                <a href="#" class="ml-1 text-sm font-medium text-white hover:text-gray-300 md:ml-2">Admin</a>
             </div>
         </li>
+
+        <!-- Admin Logs -->
+        <li aria-current="page">
+            <div class="flex items-center">
+                <svg class="w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="ml-1 text-sm font-medium text-gray-400 md:ml-2">Admin Logs</span>
+            </div>
+        </li>
+    </ol>
 </div>
 
 <div class="mt-8">
-    <h2 class="text-white text-xl font-semibold mb-4">Admin Ban Logs</h2>
+    <h2 class="text-white text-xl font-semibold mb-4">Admin Logs</h2>
 
     <!-- Search Form -->
-    <form method="GET" action="{{ route('admin.banlogs') }}" class="mb-4">
+    <form method="GET" action="{{ route('admin.logs') }}" class="mb-4">
         <div class="flex gap-2 items-center">
             <input 
                 type="text" 
@@ -44,7 +55,7 @@
     </form>
 
     @if ($logs->isEmpty())
-        <div class="text-gray-300 italic text-sm">No admin ban logs found.</div>
+        <div class="text-gray-300 italic text-sm">No admin logs found.</div>
     @else
         <div class="overflow-x-auto bg-neutral-900/60 rounded-lg border border-red-700 shadow">
             <table class="min-w-full text-sm text-left text-gray-300">

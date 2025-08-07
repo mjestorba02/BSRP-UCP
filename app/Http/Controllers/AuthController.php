@@ -117,7 +117,7 @@ class AuthController extends Controller
         $request->session()->invalidate();  // Invalidate the session
         $request->session()->regenerateToken(); // Prevent CSRF reuse
 
-        return redirect('/login');
+        return redirect('login');
     }
 
     public function destroy_announcement($id)

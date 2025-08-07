@@ -56,19 +56,3 @@ Route::get('/get-latest-updates', function () {
         'image_url' => Cache::get('latest_updates_image')
     ]);
 });
-
-//In-Game Command Logs
-Route::post('/ingame-commands', function (Request $request) {
-    try {
-        $validated = $request->validate([
-            'description' => 'required|string',
-        ]);
-
-        $command = \App\Models\CommandLogs::create($validated);
-
-        return response()->json(['success' => true]);
-    } catch (\Exception $e) {
-        Log::error('Commands error: '.$e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-});

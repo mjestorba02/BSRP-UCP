@@ -30,7 +30,7 @@
         {{-- Blurred overlay with name and ranks --}}
         <div class="absolute bottom-0 left-0 w-full flex items-center h-16 backdrop-blur-sm bg-white/10 text-white px-4 z-10">
             <div class="flex flex-col justify-center">
-                <h1 class="text-lg font-semibold">{{ str_replace('_', ' ', $user->username ?? 'Noob Dude') }}</h1>
+                <h1 class="text-lg font-semibold">{{ str_replace('_', ' ', $user->username) }}</h1>
                 <div class="flex flex-wrap gap-2 mt-1">
                     @if($user->admin_rank !== 'None')
                         <span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">

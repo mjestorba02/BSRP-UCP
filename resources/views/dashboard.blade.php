@@ -27,6 +27,28 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     <script>
+        if (window.performance && window.performance.navigation.type === 2) {
+            // If accessed via back/forward button
+            window.location.href = "{{ route('logout') }}";
+        }
+        
+        let timeout;
+
+        function startTimer() {
+            timeout = setTimeout(() => {
+                window.location.href = "{{ route('logout') }}";
+            }, 30 * 60 * 1000); // 30 minutes
+        }
+
+        function resetTimer() {
+            clearTimeout(timeout);
+            startTimer();
+        }
+
+        window.onload = startTimer;
+        document.onmousemove = resetTimer;
+        document.onkeydown = resetTimer;
+
         function displayPhilippineTime() {
             const options = {
                 timeZone: 'Asia/Manila',

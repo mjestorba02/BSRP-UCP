@@ -26,9 +26,11 @@ Route::get('/sendotp', function () {
 Route::middleware(['web'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-    Route::get('/dashboard', [AuthController::class, 'showMainPage'])->name('dashboard');
+    
+    Route::middleware(['auth', 'prevent.back.history'])->group(function () {
+        Route::get('/dashboard', [AuthController::class, 'showMainPage'])->name('dashboard');
+    });
 });
-
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
@@ -55,6 +57,7 @@ Route::prefix('misc')->middleware(['auth'])->group(function () {
     Route::get('/phonebook', [MiscController::class, 'phoneBook'])->name('misc.phonebook');
     Route::get('/turfs', [MiscController::class, 'turfs'])->name('turfs');
     Route::get('/toys', [MiscController::class, 'toys'])->name('toys');
+    Route::get('/adminroster', [AdminController::class, 'showPublicAdminRoster'])->name('roster');
 });
 
 //Delete for Announcements & Updates
@@ -117,7 +120,14 @@ Route::middleware('auth')->group(function () {
 
 //Admin Management
 Route::middleware('auth')->group(function () {
+    Route::get('/admin/roster', [AdminController::class, 'showAdminRoster'])->name('admin.roster');
+
     //Admin Logs
     Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
     Route::get('/admin/banlogs', [AdminController::class, 'banlogs'])->name('admin.banlogs');
+    Route::get('/admin/cmdlogs', [AdminController::class, 'cmdlogs'])->name('admin.cmdlogs');
+    Route::get('/admin/admincmdlogs', [AdminController::class, 'admincmdlogs'])->name('admin.admincmdlogs');
+    Route::get('/admin/lootlogs', [AdminController::class, 'lootlogs'])->name('admin.lootlogs');
+    Route::get('/admin/quitlogs', [AdminController::class, 'quitlogs'])->name('admin.quitlogs');
+    Route::get('/admin/killlogs', [AdminController::class, 'killlogs'])->name('admin.killlogs');
 });
