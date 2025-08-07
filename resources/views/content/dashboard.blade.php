@@ -58,7 +58,7 @@
                         <div class="text-xs text-gray-400 mt-3 italic flex justify-between items-center">
                             <span>{{ $announcement->created_at->diffForHumans() }}</span>
 
-                            @if ($isAdmin)
+                            @if ($user->adminlevel == 7)
                             <div x-data="{ showConfirm: false }">
                                 <!-- Trigger Button -->
                                 <button 
