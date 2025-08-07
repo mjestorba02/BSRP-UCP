@@ -185,6 +185,30 @@
             </li>
 
             <li>
+                <a href="{{ route('admin.logs') }}"
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
+                    <img src="{{ asset('svg/logs.svg') }}"
+                        alt="Profile Icon"
+                        class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
+                    <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
+                        Logs
+                    </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.banlogs') }}"
+                class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
+                    <img src="{{ asset('svg/banlogs.svg') }}"
+                        alt="Profile Icon"
+                        class="w-4 h-4 mr-3 transition group-hover:brightness-0 group-hover:invert">
+                    <span class="text-base font-medium text-[#c7c7c7] group-hover:text-white transition">
+                        Ban Logs
+                    </span>
+                </a>
+            </li>
+
+            <li>
                 <a href="#"
                 class="group flex items-center p-1 rounded-lg transition hover:bg-[#410000]">
                     <img src="{{ asset('svg/wrench.svg') }}"

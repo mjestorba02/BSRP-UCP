@@ -13,6 +13,7 @@ use App\Http\Controllers\GangController;
 use App\Http\Controllers\GangStatsController;
 use App\Http\Controllers\FactionController;
 use App\Http\Controllers\FactionStatsController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -112,4 +113,11 @@ Route::middleware('auth')->group(function () {
 
     //Faction Locker Logs
     Route::get('/faction/lockerlogs', [FactionStatsController::class, 'lockerlogs'])->name('faction.lockerlogs');
+});
+
+//Admin Management
+Route::middleware('auth')->group(function () {
+    //Admin Logs
+    Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
+    Route::get('/admin/banlogs', [AdminController::class, 'banlogs'])->name('admin.banlogs');
 });
