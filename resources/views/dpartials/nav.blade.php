@@ -8,7 +8,7 @@
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                     </svg>
                 </button>
-                <a href="#" class="flex items-center ms-2 md:me-24">
+                <a href="{{ route('dashboard') }}" class="flex items-center ms-2 md:me-24">
                     <img src="{{ asset('images/bsrplogo.jpg') }}" class="h-8 w-8 me-2 rounded-full" alt="Logo">
                     <span class="self-center text-xl font-extrabold sm:text-2xl whitespace-nowrap text-red-900 font-[Times_New_Roman] uppercase">
                         Bloodline Streets Roleplay
@@ -35,7 +35,7 @@
                         </button>
                     </div>
 
-                    <div class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded-sm shadow-sm bg-white shadow" id="dropdown-user">
+                    <div class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded-sm shadow-sm bg-gradient-to-b from-black to-[#410000] shadow" id="dropdown-user">
                         <!-- Profile Image in dropdown -->
                         <div class="flex justify-center items-center p-2">
                             <img class="w-20 h-20 rounded-full shadow-lg object-cover"
@@ -45,11 +45,11 @@
 
                         <!-- User Info -->
                         <div class="px-4 py-3 text-center" role="none">
-                            <p class="text-sm font-semibold text-gray-900">
+                            <p class="text-sm font-semibold text-white">
                                 {{ Auth::user()->username }}
                             </p>
                             @if(Auth::check() && Auth::user()->adminlevel > 0)
-                                <p class="text-sm font-medium text-gray-500 truncate">
+                                <p class="text-sm font-medium text-gray-400 truncate">
                                     {{ Auth::user()->admin_rank }}
                                 </p>
                             @endif
@@ -58,22 +58,10 @@
                         <!-- Dropdown Links -->
                         <ul class="py-1" role="none">
                             <li>
-                                <a href="{{ route('profile') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('settings') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Settings
-                                </a>
-                            </li>
-                            <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-400 hover:bg-gray-100">
                                         Sign out
                                     </button>
                                 </form>

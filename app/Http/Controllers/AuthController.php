@@ -107,7 +107,7 @@ class AuthController extends Controller
             'admin' => $user->admin,
         ]);
         \Log::info('Logged in user admin level: ' . Auth::user()->admin);
-        return redirect('dashboard')->with('success', 'Login successful!');
+        return redirect('dashboard');
     }
 
 

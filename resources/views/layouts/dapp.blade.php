@@ -24,8 +24,9 @@
     .animate-spin-reverse-slow {
       animation: spin-reverse-slow 2.5s linear infinite;
     }
-  </style>
 
+    [x-cloak] { display: none !important; }
+  </style>
 
   {{-- Styles --}}
   @stack('styles')

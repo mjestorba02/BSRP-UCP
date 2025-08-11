@@ -12,7 +12,7 @@
 
 <section class="relative w-full min-h-screen flex justify-center items-center p-4">
     <!-- Background -->
-    <div class="absolute inset-0 bg-[url('/images/loginbg.jpg')] bg-cover bg-center filter blur-sm opacity-200 z-0"></div>
+    <div class="absolute inset-0 bg-[url('/images/loginbg.jpg')] bg-cover bg-center filter blur-sm opacity-80 z-0" style="will-change: transform;"></div>
 
     <!-- Main Container -->
     <div class="relative z-10 bg-slate-200 shadow-md w-full max-w-5xl min-h-96 rounded-lg flex flex-col md:flex-row overflow-hidden">
@@ -106,12 +106,6 @@
                     class="w-full text-white bg-red-950 hover:bg-red-900 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-3">
                     Sign In
                 </button>
-
-                <!-- Register -->
-                <div class="text-center text-xs text-gray-900 font-bold mt-4">
-                    <span class="opacity-50">Don't have an account?</span>
-                    <a href="{{ route('register') }}" class="text-red-950 hover:underline ml-1">Register</a>
-                </div>
             </form>
         </div>
     </div>
