@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Announcement;
 use App\Models\Updates;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\DiscordController;
-
-Route::get('/auth/discord', [DiscordController::class, 'redirectToDiscord'])->name('discord.login');
-Route::get('/auth/discord/callback', [DiscordController::class, 'handleDiscordCallback']);
 
 //Announcement
 Route::post('/discord-announcement', function (Request $request) {

@@ -14,6 +14,7 @@ use App\Http\Controllers\GangStatsController;
 use App\Http\Controllers\FactionController;
 use App\Http\Controllers\FactionStatsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DiscordController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
@@ -131,3 +132,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/quitlogs', [AdminController::class, 'quitlogs'])->name('admin.quitlogs');
     Route::get('/admin/killlogs', [AdminController::class, 'killlogs'])->name('admin.killlogs');
 });
+
+Route::get('/auth/discord', [DiscordController::class, 'redirectToDiscord'])->name('discord.login');
+Route::get('/auth/discord/callback', [DiscordController::class, 'handleDiscordCallback']);
