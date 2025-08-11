@@ -15,7 +15,7 @@ class DiscordSyncController extends Controller
 
         // Find the user in DB
         $user = User::where('username', $username)->first();
-        if (!$user || !$user->discord_id) {
+        if (!$user || !$user->discordid) {
             return response("User not found or no Discord linked", 404);
         }
 
@@ -26,7 +26,7 @@ class DiscordSyncController extends Controller
         $response = Http::withHeaders([
             'Authorization' => "Bot {$discordBotToken}",
             'Content-Type' => 'application/json'
-        ])->patch("https://discord.com/api/v10/guilds/{$guildId}/members/{$user->discord_id}", [
+        ])->patch("https://discord.com/api/v10/guilds/{$guildId}/members/{$user->discordid}", [
             'nick' => $user->username
         ]);
 
