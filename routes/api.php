@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Announcement;
 use App\Models\Updates;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\DiscordSyncController;
+
+//Sync Discord
+Route::get('/sync-discord', [DiscordSyncController::class, 'sync']);
 
 //Announcement
 Route::post('/discord-announcement', function (Request $request) {

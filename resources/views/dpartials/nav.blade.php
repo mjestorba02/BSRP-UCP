@@ -66,6 +66,12 @@
                                     </button>
                                 </form>
                             </li>
+                            <li>
+                                <a href="#"
+                                class="block w-full text-left px-4 py-2 text-sm text-gray-400 hover:bg-gray-100">
+                                    Sync Discord
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
