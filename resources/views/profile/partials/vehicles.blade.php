@@ -16,7 +16,7 @@
             <h3 class="text-md font-semibold text-white mb-1">{{ $vehname }}</h3>
             <p class="text-sm text-gray-300">Plate: <span class="text-gray-400">{{ $vehicle->plate }}</span></p>
             <p class="text-sm text-gray-300">Ticket: <span class="text-gray-400">{{ $vehicle->tickets }}</span></p>
-            <p class="text-sm text-gray-300">Color: <span class="text-gray-400">{{ $vehicle->color1 }} || {{ $vehicle->color2 }}</span></p>
+            <p class="text-sm text-gray-300">Color: <span class="text-gray-400">{{ $vehicle->color1 }} | {{ $vehicle->color2 }}</span></p>
 
             @php
                 $healthPercent = min(100, ($vehicle->health / 1000) * 100);
