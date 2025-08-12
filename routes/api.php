@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Announcement;
 use App\Models\Updates;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\AntivpnController;
+
+Route::get('/check/{ip}', [AntivpnController::class, 'checkIp']);
 
 //Announcement
 Route::post('/discord-announcement', function (Request $request) {
