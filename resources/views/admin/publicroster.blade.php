@@ -71,7 +71,7 @@
                         <span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold text-red-300 {{ $colorClass }} rounded-full">
                             {{ $rankName }}
                         </span>
-                        <p class="text-xs text-gray-400 mt-2">Level: {{ $admin->level1 }}</p>
+                        <p class="text-xs text-gray-400">Divisions: <span class="text-gray-200">{{ $admin->division }}</span></p>
                     </div>
                 </div>
             </div>

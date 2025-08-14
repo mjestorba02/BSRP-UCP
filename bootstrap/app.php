@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent.back.history' => \App\Http\Middleware\PreventBackHistory::class,
         ]);
     })
+    ->withBindings([
+        Illuminate\Contracts\Http\Kernel::class => App\Http\Kernel::class,
+        // For console kernel too, if needed:
+        // Illuminate\Contracts\Console\Kernel::class => App\Console\CustomKernel::class,
+    ])
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

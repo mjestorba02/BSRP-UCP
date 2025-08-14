@@ -48,4 +48,13 @@ class Kernel extends HttpKernel
         'check.token' => \App\Http\Middleware\CheckUserToken::class,
         'auth.custom' => \App\Http\Middleware\Authenticate::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('antivpn:update-ip-list')->dailyAt('03:00');
+    }
+
+    protected $commands = [
+        \App\Console\Commands\UpdateAntivpnList::class,
+    ];
 }

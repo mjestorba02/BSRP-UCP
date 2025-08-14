@@ -17,6 +17,31 @@ class AdminController extends Controller
             ->orderByDesc('adminlevel')
             ->get();
 
+        foreach ($admins as $admin) {
+            $divisions = [];
+
+            if ($admin->factionmod) {
+                $divisions[] = 'FM';
+            }
+            if ($admin->gangmod) {
+                $divisions[] = 'GM';
+            }
+            if ($admin->banappealer) {
+                $divisions[] = 'HI';
+            }
+            if ($admin->publicrelations) {
+                $divisions[] = 'PR';
+            }
+            if ($admin->nongamingstaff) {
+                $divisions[] = 'NGS';
+            }
+            if ($admin->dynamicadmin) {
+                $divisions[] = 'DA';
+            }
+
+            $admin->division = count($divisions) > 0 ? implode(' | ', $divisions) : 'NONE';
+        }
+
         return view('dashboard', [
             'mainContent' => 'admin.publicroster',
             'admins' => $admins,
