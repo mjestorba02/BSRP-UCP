@@ -50,11 +50,8 @@ Route::get('/otp', function (Request $request) {
                     ->subject('Your One-Time Password (OTP)');
         });
 
-        return response()->json(['success' => true]);
+        return response("1", 200)->header('Content-Type', 'text/plain');
     } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage()
-        ], 500);
+        return response("0", 500)->header('Content-Type', 'text/plain');
     }
 });
