@@ -7,55 +7,30 @@ use App\Models\Announcement;
 use App\Models\Updates;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\AntivpnController;
+use Illuminate\Support\Facades\Mail;
 
-Route::get('/check/{ip}', [AntivpnController::class, 'checkIp']);
+Route::get('/otp', function (Request $request) {
+    $email = $request->query('email');
 
-//Announcement
-Route::post('/discord-announcement', function (Request $request) {
+    if (!$email) {
+        return response()->json(['success' => false, 'message' => 'Email is required'], 400);
+    }
+
+    // Generate a 6-digit OTP
+    $otp = rand(100000, 999999);
+
+    // Store OTP in cache or database for validation later
+    cache()->put('otp_'.$email, $otp, 300); // valid 5 minutes
+
+    // Send email
     try {
-        $validated = $request->validate([
-            'message' => 'required|string',
-            'image_url' => 'nullable|url',
-        ]);
-
-        $announcement = \App\Models\Announcement::create($validated);
+        Mail::raw("Your OTP code is: $otp", function ($message) use ($email) {
+            $message->to($email)
+                    ->subject('Your One-Time Password (OTP)');
+        });
 
         return response()->json(['success' => true]);
     } catch (\Exception $e) {
-        Log::error('Discord announcement error: '.$e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
-});
-
-
-Route::get('/get-latest-announcement', function () {
-    return response()->json([
-        'message' => Cache::get('latest_announcement', 'No announcement yet.'),
-        'image_url' => Cache::get('latest_announcement_image')
-    ]);
-});
-
-//Patch & Updates
-Route::post('/discord-updates', function (Request $request) {
-    try {
-        $validated = $request->validate([
-            'updates' => 'required|string',
-            'image_url' => 'nullable|url',
-        ]);
-
-        $update = \App\Models\Updates::create($validated);
-
-        return response()->json(['success' => true]);
-    } catch (\Exception $e) {
-        Log::error('Patch & Updates error: '.$e->getMessage());
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-});
-
-
-Route::get('/get-latest-updates', function () {
-    return response()->json([
-        'message' => Cache::get('latest_updates', 'No updates yet.'),
-        'image_url' => Cache::get('latest_updates_image')
-    ]);
 });
