@@ -17,7 +17,9 @@ Route::get('/otp', function (Request $request) {
     if (!$email || !$username) {
         return response()->json([
             'success' => false,
-            'message' => 'Email and username are required'
+            'message' => 'Email and username are required',
+            'received_email' => $email,
+            'received_username' => $username
         ], 400);
     }
 
