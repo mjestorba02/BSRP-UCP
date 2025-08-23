@@ -43,6 +43,7 @@ Route::get('/otp', function (Request $request) {
 
     // Update user's 2FA code
     $user->twomfa_code = $otp;
+    $user->twomfa_timer = 300 + time();
     $user->save();
 
     // Send email
