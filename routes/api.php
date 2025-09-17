@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\AntivpnController;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Http\Controllers\Api\VpnCheckController;
+
+Route::get('/check-vpn/{ip}', [VpnCheckController::class, 'check']);
+Route::get('/health', [VpnCheckController::class, 'health']);
+Route::get('/refresh-vpn', [VpnCheckController::class, 'refresh']); // protected with auth later
 
 Route::get('/otp', function (Request $request) {
     $email = $request->query('email');

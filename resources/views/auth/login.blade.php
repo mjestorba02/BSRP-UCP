@@ -1,116 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('images/bsrplogo.png') }}" type="image/png">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <title>BS:RP | Login</title>
-</head>
-<body class="overflow-x-hidden">
+require("dotenv").config();
+const express = require("express");
+const mysql = require("mysql2/promise");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const { createWhirlpool } = require("hash-wasm");
 
-<section class="relative w-full min-h-screen flex justify-center items-center p-4">
-    <!-- Background -->
-    <div class="absolute inset-0 bg-[url('/images/loginbg.jpg')] bg-cover bg-center filter blur-sm opacity-80 z-0" style="will-change: transform;"></div>
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-    <!-- Main Container -->
-    <div class="relative z-10 bg-slate-200 shadow-md w-full max-w-5xl min-h-96 rounded-lg flex flex-col md:flex-row overflow-hidden">
-        
-        <!-- Left Image Side -->
-        <div class="w-full md:w-1/2 bg-white flex justify-center items-center p-4 md:rounded-l-lg">
-            <img class="rounded-md w-full h-60 md:h-full object-cover shadow-md" src="{{ asset('images/loginbg.jpg') }}" alt="Login Image">
-        </div>
+// DB pool
+const pool = mysql.createPool({
+  host: process.env.TEST_DB_HOST,
+  user: process.env.TEST_DB_USER,
+  password: process.env.TEST_DB_PASS,
+  database: process.env.TEST_DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+});
 
-        <!-- Right Form Side -->
-        <div class="w-full md:w-1/2 p-6 flex flex-col justify-center">
+// Utility: send standardized error
+function sendError(res, code, msg) {
+  return res.status(code).json({ success: false, msg });
+}
 
-            {{-- Show Google login error --}}
-            @if ($errors->has('msg'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-xs text-center">
-                    {{ $errors->first('msg') }}
-                </div>
-            @endif
+// Utility: auth middleware
+function requireAuth(req, res, next) {
+  const hdr = req.headers.authorization || "";
+  const token = hdr.split(" ")[1];
+  if (!token) return sendError(res, 401, "No token provided");
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = payload; // { uid, username, adminlevel }
+    next();
+  } catch {
+    return sendError(res, 401, "Invalid or expired token");
+  }
+}
 
-            @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-xs text-center">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
+// Hash helper
+async function whirlpoolHash(str) {
+  const hasher = await createWhirlpool();
+  hasher.init();
+  hasher.update(str);
+  return hasher.digest("hex").toUpperCase(); // SA-MP stores uppercase hashes
+}
 
-            @if(session('acc_banned'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-xs text-center">Your account has been banned.</div>
-            @endif
+// LOGIN
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const [rows] = await pool.query(
+      "SELECT uid, username, password, adminlevel, bank, cash FROM users WHERE username = ? LIMIT 1",
+      [username]
+    );
 
-            @if(session('success'))
-                <div id="successMessage" class="mb-4 p-3 bg-green-100 text-green-800 text-sm rounded-md text-center">
-                    {{ session('success') }}
-                </div>
+    if (rows.length === 0) return sendError(res, 401, "User not found");
 
-                <script>
-                    setTimeout(() => {
-                        const msg = document.getElementById('successMessage');
-                        if (msg) msg.style.display = 'none';
-                    }, 4000);
-                </script>
-            @endif
+    const user = rows[0];
 
+    // Hash incoming password with Whirlpool
+    const hashed = await whirlpoolHash(password);
 
-            <div class="text-center mb-4">
-                <h1 class="font-bold text-xl md:text-2xl text-red-950">Welcome Back to Bloodline Streets Roleplay!</h1>
-                <p class="opacity-50 font-bold text-xs text-gray-900 mt-2">Sign in your account</p>
-            </div>
+    if (hashed !== user.password) {
+      return sendError(res, 401, "Invalid password");
+    }
 
-            <form method="POST" action="{{ route('login.submit') }}" class="space-y-3 mt-3 w-full">
-                @csrf
+    // Create token with adminlevel
+    const token = jwt.sign(
+      { uid: user.uid, username: user.username, adminlevel: user.adminlevel },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-                <!-- Email -->
-                <div class="relative z-0 w-full group">
-                    <input type="text" name="username" id="username"
-                        class="block py-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-black peer"
-                        placeholder=" " value="{{ old('username') }}" required />
-                    <label for="username"
-                        class="absolute text-xs text-red-950 duration-300 transform scale-75 -translate-y-6 top-3 origin-[0] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Username
-                    </label>
-                    @error('email')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+    delete user.password; // never send hash
+    res.json({ success: true, token, user });
+  } catch (err) {
+    console.error(err);
+    sendError(res, 500, "Server error");
+  }
+});
 
-                <!-- Password -->
-                <div class="relative z-0 w-full group">
-                    <input type="password" name="password" id="password"
-                        class="block py-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-black peer"
-                        placeholder=" " required />
-                    <label for="password"
-                        class="absolute text-xs text-red-950 duration-300 transform scale-75 -translate-y-6 top-3 origin-[0] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Password
-                    </label>
-                    @error('password')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+// DASHBOARD
+app.get("/api/dashboard", requireAuth, async (req, res) => {
+  try {
+    const uid = req.user.uid;
 
-                <div class="flex items-center justify-between text-xs mt-1">
-                    <label class="flex items-center gap-1 text-gray-900">
-                        <input type="checkbox" name="remember" class="h-3 w-3 text-blue-600 border-gray-300 focus:ring-blue-500">
-                        <span>Remember me</span>
-                    </label>
-                    <a href="#" class="opacity-60 text-gray-900 font-semibold">Forgot Password?</a>
-                </div>
+    const [[user]] = await pool.query(
+      "SELECT uid, username, bank, cash, adminlevel FROM users WHERE uid = ? LIMIT 1",
+      [uid]
+    );
+    if (!user) return sendError(res, 404, "User not found");
 
-                <button type="submit"
-                    class="w-full text-white bg-red-950 hover:bg-red-900 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-3">
-                    Sign In
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
+    const [[{ total: cardTotal }]] = await pool.query(
+      "SELECT COALESCE(SUM(balance),0) AS total FROM cards WHERE owner = ?",
+      [uid]
+    );
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-</body>
-</html>
+    const wealth = Number(user.bank) + Number(user.cash) + Number(cardTotal);
+
+    const [gangs] = await pool.query("SELECT * FROM gangs");
+    const [gangranks] = await pool.query("SELECT * FROM gangranks");
+
+    const [announcements] = await pool.query(
+      "SELECT id, message, image_url, created_at FROM announcements ORDER BY created_at DESC"
+    );
+    const [updates] = await pool.query(
+      "SELECT id, updates, image_url, created_at FROM updates ORDER BY created_at DESC"
+    );
+
+    res.json({
+      success: true,
+      data: { user, gangs, gangranks, cardTotal, wealth, announcements, updates },
+    });
+  } catch (err) {
+    console.error(err);
+    sendError(res, 500, "Server error");
+  }
+});
+
+// DELETE ANNOUNCEMENT
+app.delete("/api/announcements/:id", requireAuth, async (req, res) => {
+  if ((req.user.adminlevel || 0) < 7) return sendError(res, 403, "Forbidden");
+  try {
+    await pool.query("DELETE FROM announcements WHERE id=?", [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    sendError(res, 500, "Server error");
+  }
+});
+
+// DELETE UPDATE
+app.delete("/api/updates/:id", requireAuth, async (req, res) => {
+  if ((req.user.adminlevel || 0) < 1) return sendError(res, 403, "Forbidden");
+  try {
+    await pool.query("DELETE FROM updates WHERE id=?", [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    sendError(res, 500, "Server error");
+  }
+});
+
+app.listen(5000, () =>
+  console.log("✅ Backend running on http://localhost:5000")
+);
