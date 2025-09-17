@@ -16,7 +16,7 @@ use App\Http\Controllers\FactionStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiscordController;
 
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
+//Route::get('/', [AuthController::class, 'showLoginForm'])->name('landing');
 
 
 Route::get('/sendotp', function () {
@@ -30,6 +30,14 @@ Route::middleware(['web'])->group(function () {
     
     Route::middleware(['auth', 'prevent.back.history'])->group(function () {
         Route::get('/dashboard', [AuthController::class, 'showMainPage'])->name('dashboard');
+    });
+
+    Route::get('/', function () {
+        return redirect()->route('maintenance');
+    });
+
+    Route::get('/maintenance', function () {
+        return view('maintenance');
     });
 });
 
